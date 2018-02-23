@@ -118,6 +118,7 @@ public abstract class TextArea extends JPanel
 		horizontal.setRequestFocusEnabled(false);
 
 		horizontal.setValues(0,0,0,0);
+		
 		//}}}
 
 		//{{{ this ensures that the text area's look is slightly
@@ -680,6 +681,17 @@ public abstract class TextArea extends JPanel
 		setFirstLine(getFirstLine() - 1);
 	} //}}}
 
+	//disable the scrollbar
+	public void disableScrollbar(){
+		vertical.setVisible(false);
+		horizontal.setVisible(false);
+	}
+	
+	
+	
+	
+	
+	
 	//{{{ scrollUpPage() method
 	/**
 	 * Scrolls up by one page.
