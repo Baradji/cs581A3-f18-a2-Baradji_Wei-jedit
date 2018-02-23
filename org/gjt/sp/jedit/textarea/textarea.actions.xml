@@ -420,6 +420,12 @@
 	</CODE>
 </ACTION>
 
+<ACTION NAME="scroll-disable">
+	<CODE>
+		textArea.scrollUpPage();
+	</CODE>
+</ACTION>
+
 <ACTION NAME="scroll-up-line">
 	<CODE>
 		textArea.scrollUpLine();

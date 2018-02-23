@@ -397,6 +397,8 @@ scrolling=scroll-to-current-line \
 	  center-caret \
 	  scroll-and-center \
 	  - \
+	  scroll-disable \
+	  - \
 	  scroll-up-line \
 	  scroll-down-line \
 	  - \
