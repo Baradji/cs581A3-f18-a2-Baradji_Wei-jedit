@@ -1174,6 +1174,9 @@
 	<CODE>
 		textArea.disableScrollbar();
 	</CODE>
+	<IS_SELECTED>
+		return textArea.sbisEnable();
+	</IS_SELECTED>
 </ACTION>
 
 
