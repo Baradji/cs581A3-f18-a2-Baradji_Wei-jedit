@@ -683,13 +683,19 @@ public abstract class TextArea extends JPanel
 
 	//disable the scrollbar
 	public void disableScrollbar(){
-		vertical.setVisible(false);
-		horizontal.setVisible(false);
+		dsb(sbEnable);
+		
 	}
 	
+	public boolean sbisEnable(){
+		return sbEnable;
+	}
 	
-	
-	
+	public void dsb(boolean sbEnable){
+		this.sbEnable=!sbEnable;
+		vertical.setVisible(sbEnable);
+		horizontal.setVisible(sbEnable);
+	}
 	
 	
 	//{{{ scrollUpPage() method
@@ -5302,6 +5308,7 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 	private int magicCaret;
 	/** Flag that tells if multiple selection is on. */
 	protected boolean multi;
+	protected boolean sbEnable=false;
 	private boolean overwrite;
 	private boolean rectangularSelectionMode;
 

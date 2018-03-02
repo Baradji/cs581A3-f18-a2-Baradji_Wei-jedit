@@ -422,8 +422,11 @@
 
 <ACTION NAME="scroll-disable">
 	<CODE>
-		textArea.scrollUpPage();
+		textArea.disableScrollbar();
 	</CODE>
+	<IS_SELECTED>
+		return textArea.sbisEnable();
+	</IS_SELECTED>
 </ACTION>
 
 <ACTION NAME="scroll-up-line">
