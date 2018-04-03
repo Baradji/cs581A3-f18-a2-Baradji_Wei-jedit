@@ -1503,6 +1503,7 @@ public abstract class TextArea extends JPanel
 	} //}}}
 
 	private int start(int caretLine) {
+		
 		int start = caretLine;
 		int end = caretLine;
 		while (start >= 0) {
