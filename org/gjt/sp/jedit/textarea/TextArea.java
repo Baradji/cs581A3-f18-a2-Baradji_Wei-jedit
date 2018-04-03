@@ -1499,34 +1499,34 @@ public abstract class TextArea extends JPanel
 			return;
 		}
 
+		int start = start(caretLine);
+	} //}}}
+
+	private int start(int caretLine) {
 		int start = caretLine;
 		int end = caretLine;
-
-		while(start >= 0)
-		{
-			if(getLineLength(start) == 0)
+		while (start >= 0) {
+			if (getLineLength(start) == 0)
 				break;
 			else
 				start--;
 		}
-
-		while(end < getLineCount())
-		{
-			if(getLineLength(end) == 0)
+		while (end < getLineCount()) {
+			if (getLineLength(end) == 0)
 				break;
 			else
 				end++;
 		}
-
 		int selectionStart = getLineStartOffset(start + 1);
 		int selectionEnd = getLineEndOffset(end - 1) - 1;
-		Selection s = new Selection.Range(selectionStart,selectionEnd);
-		if(multi)
+		Selection s = new Selection.Range(selectionStart, selectionEnd);
+		if (multi)
 			addToSelection(s);
 		else
 			setSelection(s);
 		moveCaretPosition(selectionEnd);
-	} //}}}
+		return start;
+	}
 
 	//{{{ selectWord() method
 	/**
