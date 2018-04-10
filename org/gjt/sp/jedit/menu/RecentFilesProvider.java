@@ -139,16 +139,8 @@ public class RecentFilesProvider implements DynamicMenuProvider
 			String path = iter.next().path;
 			if (jEdit.getBooleanProperty("hideOpen") && jEdit.getBuffer(path) != null)
 				continue;
-			JMenuItem menuItem = new JMenuItem(MiscUtilities
-				.getFileName(path));
-			menuItem.setToolTipText(path);
+			JMenuItem menuItem = menuItem(actionListener, changeListener, path);
 			menuItem.setActionCommand(path);
-			menuItem.addActionListener(actionListener);
-//			menuItem.addMouseListener(mouseListener);
-			menuItem.addChangeListener(changeListener);
-			
-			menuItem.setIcon(FileCellRenderer.fileIcon);
-
 			menuItems.add(menuItem);
 			if (!sort)
 			{
@@ -193,4 +185,13 @@ public class RecentFilesProvider implements DynamicMenuProvider
 		menu.addSeparator();
 		menu.add(menuItem);
 	} //}}}
+
+	private JMenuItem menuItem(ActionListener actionListener, ChangeListener changeListener, String path) {
+		JMenuItem menuItem = new JMenuItem(MiscUtilities.getFileName(path));
+		menuItem.setToolTipText(path);
+		menuItem.addActionListener(actionListener);
+		menuItem.addChangeListener(changeListener);
+		menuItem.setIcon(FileCellRenderer.fileIcon);
+		return menuItem;
+	}
 }
