@@ -764,4 +764,15 @@ public abstract class Selection implements Cloneable
 
 		//}}}
 	} //}}}
+
+	/**
+	 * Returns the text in the specified selection.
+	 * @since  jEdit 3.2pre1
+	 * @param buffer
+	 */
+	public String getSelectedText(JEditBuffer buffer) {
+		StringBuilder buf = new StringBuilder(this.end - this.start);
+		getText(buffer, buf);
+		return buf.toString();
+	}
 }
