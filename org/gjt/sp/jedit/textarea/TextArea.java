@@ -76,6 +76,8 @@ import org.gjt.sp.util.ThreadUtilities;
  */
 public abstract class TextArea extends JPanel
 {
+	private TextAreaProduct textAreaProduct = new TextAreaProduct();
+
 	//{{{ TextArea constructor
 	/**
 	 * Creates a new JEditTextArea.
@@ -84,7 +86,7 @@ public abstract class TextArea extends JPanel
 	 */
 	protected TextArea(IPropertyManager propertyManager, InputHandlerProvider inputHandlerProvider)
 	{
-		this.inputHandlerProvider = inputHandlerProvider;
+		textAreaProduct.setInputHandlerProvider(inputHandlerProvider);
 		enableEvents(AWTEvent.FOCUS_EVENT_MASK | AWTEvent.KEY_EVENT_MASK);
 
 		//{{{ Initialize some misc. stuff
@@ -167,30 +169,13 @@ public abstract class TextArea extends JPanel
 	 */
 	public void initInputHandler()
 	{
-		actionContext = new JEditActionContext<JEditBeanShellAction, JEditActionSet<JEditBeanShellAction>>()
-		{
-			@Override
-			public void invokeAction(EventObject evt, JEditBeanShellAction action)
-			{
-				action.invoke(TextArea.this);
-			}
-		};
-
-		setMouseHandler(new TextAreaMouseHandler(this));
-		inputHandlerProvider = new DefaultInputHandlerProvider(new TextAreaInputHandler(this)
-		{
-			@Override
-			protected JEditBeanShellAction getAction(String action)
-			{
-				return actionContext.getAction(action);
-			}
-		});
+		textAreaProduct.initInputHandler(this);
 	} //}}}
 
 	//{{{ getActionContext() method
 	public JEditActionContext<JEditBeanShellAction,JEditActionSet<JEditBeanShellAction>> getActionContext()
 	{
-		return actionContext;
+		return textAreaProduct.getActionContext();
 	} //}}}
 
 	//{{{ setMouseHandler() method
@@ -259,7 +244,7 @@ public abstract class TextArea extends JPanel
 	public AbstractInputHandler getInputHandler()
 	{
 
-		return inputHandlerProvider.getInputHandler();
+		return textAreaProduct.getInputHandlerProvider().getInputHandler();
 	} //}}}
 
 	//{{{ getPainter() method
@@ -4944,7 +4929,7 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 	 */
 	public void addActionSet(JEditActionSet<JEditBeanShellAction> actionSet)
 	{
-		actionContext.addActionSet(actionSet);
+		textAreaProduct.getActionContext().addActionSet(actionSet);
 	} //}}}
 
 	//{{{ getMarkPosition() method
@@ -4975,11 +4960,6 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 	final ChunkCache chunkCache;
 	DisplayManager displayManager;
 	final SelectionManager selectionManager;
-	/**
-	 * The action context.
-	 * It is used only when the textarea is standalone
-	 */
-	private JEditActionContext<JEditBeanShellAction,JEditActionSet<JEditBeanShellAction>> actionContext;
 	boolean bufferChanging;
 
 	int maxHorizontalScrollWidth;
@@ -5271,8 +5251,6 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 
 	private boolean caretBlinks;
 	private final ElasticTabstopsTabExpander elasticTabstopsExpander = new ElasticTabstopsTabExpander(this);
-	protected InputHandlerProvider inputHandlerProvider;
-
 	private InputMethodSupport inputMethodSupport;
 
 	/** The last visible physical line index. */
