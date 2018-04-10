@@ -65,35 +65,7 @@ public class ScrollLayout implements LayoutManager
  	 */
 	public void addLayoutComponent(String name, Component comp)
 	{
-		switch(name) {
-			case CENTER:
-				center = comp;
-				break;
-			case RIGHT:
-				right = comp;
-				break;
-			case LEFT:
-				left = comp;
-				break;
-			case BOTTOM:
-				bottom = comp;
-				break;
-			case TOP:
-				top = comp;
-				break;
-			case TOP_LEFT:
-				topLeft = comp;
-				break;
-			case TOP_RIGHT:
-				topRight = comp;
-				break;
-			case BOTTOM_LEFT:
-				bottomLeft = comp;
-				break;
-			case BOTTOM_RIGHT:
-				bottomRight = comp;
-				break;
-		}
+		getNameObject(name).addLayoutComponent(comp, this);
 	} //}}}
 
 	//{{{ removeLayoutComponent() method
@@ -371,6 +343,66 @@ public class ScrollLayout implements LayoutManager
 		else
 			return border.getBorderInsets(parent);
 	} //}}}
+
+	private Name getNameObject(String name) {
+		switch (name) {
+		case CENTER:
+			return new Center();
+		case RIGHT:
+			return new Right();
+		case LEFT:
+			return new Left();
+		case BOTTOM:
+			return new Bottom();
+		case TOP:
+			return new Top();
+		case TOP_LEFT:
+			return new TopLeft();
+		case TOP_RIGHT:
+			return new TopRight();
+		case BOTTOM_LEFT:
+			return new BottomLeft();
+		case BOTTOM_RIGHT:
+			return new BottomRight();
+		}
+		return null;
+	}
+
+	public void setCenter(Component center) {
+		this.center = center;
+	}
+
+	public void setRight(Component right) {
+		this.right = right;
+	}
+
+	public void setLeft(Component left) {
+		this.left = left;
+	}
+
+	public void setBottom(Component bottom) {
+		this.bottom = bottom;
+	}
+
+	public void setTop(Component top) {
+		this.top = top;
+	}
+
+	public void setTopLeft(Component topLeft) {
+		this.topLeft = topLeft;
+	}
+
+	public void setTopRight(Component topRight) {
+		this.topRight = topRight;
+	}
+
+	public void setBottomLeft(Component bottomLeft) {
+		this.bottomLeft = bottomLeft;
+	}
+
+	public void setBottomRight(Component bottomRight) {
+		this.bottomRight = bottomRight;
+	}
 	
 	//}}}
 }

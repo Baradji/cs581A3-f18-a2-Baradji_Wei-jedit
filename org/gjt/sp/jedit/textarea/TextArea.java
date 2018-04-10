@@ -1499,35 +1499,36 @@ public abstract class TextArea extends JPanel
 			return;
 		}
 
-		int start = start(caretLine);
-	} //}}}
-
-	private int start(int caretLine) {
-		
 		int start = caretLine;
 		int end = caretLine;
-		while (start >= 0) {
-			if (getLineLength(start) == 0)
+
+		while(start >= 0)
+		{
+			if(getLineLength(start) == 0)
 				break;
 			else
 				start--;
 		}
-		while (end < getLineCount()) {
-			if (getLineLength(end) == 0)
+
+		while(end < getLineCount())
+		{
+			if(getLineLength(end) == 0)
 				break;
 			else
 				end++;
 		}
+
 		int selectionStart = getLineStartOffset(start + 1);
 		int selectionEnd = getLineEndOffset(end - 1) - 1;
-		Selection s = new Selection.Range(selectionStart, selectionEnd);
-		if (multi)
+		Selection s = new Selection.Range(selectionStart,selectionEnd);
+		if(multi)
 			addToSelection(s);
 		else
 			setSelection(s);
 		moveCaretPosition(selectionEnd);
-		return start;
-	}
+	} //}}}
+
+	
 
 	//{{{ selectWord() method
 	/**
@@ -1988,9 +1989,7 @@ forward_scan:	do
 	 */
 	public String getSelectedText(Selection s)
 	{
-		StringBuilder buf = new StringBuilder(s.end - s.start);
-		s.getText(buffer,buf);
-		return buf.toString();
+		return s.getSelectedText(buffer);
 	}
 
 	/**
@@ -4261,7 +4260,7 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 
 			for (Selection s : selection)
 			{
-				setSelectedText(s, TextUtilities.format(getSelectedText(s), maxLineLen,
+				setSelectedText(s, TextUtilities.format(s.getSelectedText(buffer), maxLineLen,
 									buffer.getTabSize()));
 			}
 
@@ -4346,7 +4345,7 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 			for (Selection s : selection)
 			{
 				setSelectedText(s, TextUtilities.spacesToTabs(
-					getSelectedText(s), buffer.getTabSize()));
+					s.getSelectedText(buffer), buffer.getTabSize()));
 			}
 		}
 
@@ -4380,7 +4379,7 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 			for (Selection s : selection)
 			{
 				setSelectedText(s, TextUtilities.tabsToSpaces(
-					getSelectedText(s), buffer.getTabSize()));
+					s.getSelectedText(buffer), buffer.getTabSize()));
 			}
 		}
 
@@ -4419,7 +4418,7 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 		buffer.beginCompoundEdit();
 
 		for (Selection s : selection)
-			setSelectedText(s, getSelectedText(s).toUpperCase());
+			setSelectedText(s, s.getSelectedText(buffer).toUpperCase());
 
 		buffer.endCompoundEdit();
 		if (caret != -1)
@@ -4458,7 +4457,7 @@ loop:		for(int i = lineNo - 1; i >= 0; i--)
 		buffer.beginCompoundEdit();
 
 		for (Selection s : selection)
-			setSelectedText(s, getSelectedText(s).toLowerCase());
+			setSelectedText(s, s.getSelectedText(buffer).toLowerCase());
 
 		buffer.endCompoundEdit();
 		if (caret != -1)
